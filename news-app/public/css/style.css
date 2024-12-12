@@ -1,0 +1,11 @@
+.background{
+    background: linear-gradient(to right, gray,dimgray,black);
+}
+.nav-item .active{
+    border-bottom:2px solid white ;
+}
+
+.dropdown .active{
+    border: none;
+    
+}
