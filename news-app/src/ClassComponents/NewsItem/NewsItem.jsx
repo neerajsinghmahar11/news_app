@@ -13,9 +13,9 @@ export default class NewsItem extends Component {
                                 <p>{this.props.source}</p>
                                 <p>{new Date(this.props.date).toLocaleDateString()}</p>
                             </div>
-                            <hr />
+                            <hr/>
                             <p className="card-text">{this.props.description}</p>
-                            <a href={this.props.url} className="btn btn-primary background">Read Full article</a>
+                            <a href={this.props.url} target='blank' rel='npreferrer' className="btn btn-primary background center" >Read Full article</a>
                         </div>
                 </div>
             </div>

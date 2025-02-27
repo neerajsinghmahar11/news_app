@@ -44,8 +44,8 @@ export default class Navbar extends Component {
                                     language
                                 </NavLink>
                                 <ul className="dropdown-menu">
-                                    <li><button className="dropdown-item" >Hindi</button></li>
-                                    <li><button className="dropdown-item"   >English</button></li>
+                                    <li><button className="dropdown-item" onClick={()=> this.props.changeLanguage('hi')} >Hindi</button></li>
+                                    <li><button className="dropdown-item" onClick={()=> this.props.changeLanguage('en')} >English</button></li>
                                 </ul>
                             </li>
                             
@@ -53,8 +53,7 @@ export default class Navbar extends Component {
                         <form className="d-flex" role="search">
                             <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
                             <button className="btn btn-outline-light    " type="submit">Search</button>
-                        </form>
-                    
+                        </form>               
                     </div>
                 </div>
             </nav>

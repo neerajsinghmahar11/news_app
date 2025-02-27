@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import NewsItem from '../NewsItem/NewsItem';
+import NewsItem from '../NewsItem/NewsItem'
 
 export default class Home extends Component {
 
@@ -11,13 +11,13 @@ export default class Home extends Component {
     }
   }
 
+    
   async getAPIData(){
-    let response = await fetch(`https://newsapi.org/v2/everything?q=sports&language=hi&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
+    let response = await fetch(`https://newsapi.org/v2/everything?q=${this.props.q}&language=${this.props.language}&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
     response=await response.json();
-    console.log(response)
 
     this.setState({
-      articles: response.articles,
+      articles: response.articles.filter(x=>x.titel!=="[Removed]"),
       totalResults: response.totalResults
     })
   }
@@ -26,6 +26,11 @@ export default class Home extends Component {
     this.getAPIData()
   }
 
+  componentDidUpdate(prevProps){
+    console.log("hero ")
+    if(this.props!==prevProps)
+      this.getAPIData();
+  }
   render() {
     return (
       <div className='container-flud'>
