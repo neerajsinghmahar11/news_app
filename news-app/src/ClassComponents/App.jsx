@@ -9,18 +9,24 @@ export default class App extends Component {
     constructor(){
         super()
         this.state={
-            language:'hi'
+            language:'hi',
+            search:""
         }
         this.changeLanguage=this.changeLanguage.bind(this)
+        this.changeSearch=this.changeSearch.bind(this)
     }
     changeLanguage(input){
         this.setState({language:input})
     }
 
+    changeSearch(input){
+        this.setState({search:input})
+    }
+
     render() {
         return (
             <BrowserRouter>
-                <Navbar changeLanguage={this.changeLanguage}/>
+                <Navbar changeLanguage={this.changeLanguage} changeSearch={this.changeSearch}/>
 
                     <Routes>
                         <Route path='' element={<Home language={this.state.language} q="All" />} />
