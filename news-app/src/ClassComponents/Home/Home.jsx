@@ -10,30 +10,32 @@ export default class Home extends Component {
     this.state = {
       articles: [],
       totalResults: 0,
-      page:1
+      page: 1
     }
   }
 
   async getAPIData() {
-    this.setState({page:1})
+    this.setState({ page: 1 })
     let response = await fetch(`https://newsapi.org/v2/everything?q=${this.props.search ? this.props.search : this.props.q}&language=${this.props.language}&pageSize=24&page=${this.state.page}&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
     response = await response.json();
 
-    this.setState({
-      articles: response.articles.filter(x => x.titel !== "[Removed]"),
-      totalResults: response.totalResults
-    })
+    if(response?.status==="ok"){
+      this.setState({
+        articles: response.articles.filter(x => x.titel !== "[Removed]"),
+        totalResults: response.totalResults
+      })
+    }
   }
 
-  fetchData=async ()=>{
-    this.setState({page:this.state.page+1})
+  fetchData = async () => {
+    this.setState({ page: this.state.page + 1 })
     let response = await fetch(`https://newsapi.org/v2/everything?q=${this.props.search ? this.props.search : this.props.q}&language=${this.props.language}&pageSize=24&page=${this.state.page}&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
     response = await response.json();
 
 
-    if(response?.status==='ok'){
-      this.setState({articles:this.state.articles.concat(response.articles.filter(x => x.title !=="[Removed]"))})
-  }
+    if (response?.status ==='ok') {
+      this.setState({ articles: this.state.articles.concat(response.articles.filter(x => x.title !== "[Removed]")) })
+    }
   }
 
   componentDidMount() {
@@ -51,8 +53,12 @@ export default class Home extends Component {
         <InfiniteScroll
           dataLength={this.state.articles?.length} //This is important field to render the next data
           next={this.fetchData}
-          hasMore={this.state.articles?.length<this.state.totalResults}
-          loader={<h4>Loading...</h4>}
+          hasMore={this.state.articles?.length < this.state.totalResults}
+          loader={<div className='my-5 text-center'>
+            <div className="spinner-border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </div>
+          </div>}
         >
           <div className="row">
             {
