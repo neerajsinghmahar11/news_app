@@ -1,21 +1,24 @@
 import React, {  useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import NewsItem from '../NewsItem/NewsItem'
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 
 
-export default function Home(props) {
+export default function Home() {
 
   let  [articles,setArticles]=useState([]);
   let  [totalResults,setTotalResults]=useState(0);
   let [page,setPage]=useState(1);
+  
   let search= useLocation().search;
   let query=new URLSearchParams(search);
 
+  let [q,setQ]=useState("All")
+  let [language,setLanguage]=useState("hi")
 
 
-  async function getAPIData() {
+  async function getAPIData(q,language) {
     setPage(1)
     let response = await fetch(`https://newsapi.org/v2/everything?q=${q}&language=${language}&pageSize=24&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
     response = await response.json();
@@ -28,7 +31,7 @@ export default function Home(props) {
 
   let fetchData=async () => {
     setPage(page+1);
-    let response = await fetch(`https://newsapi.org/v2/everything?q=${props.search ? props.search : props.q}&language=${props.language}&pageSize=24&page=${page}&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
+    let response = await fetch(`https://newsapi.org/v2/everything?q=${q}&language=${language}&pageSize=24&page=${page}&sortBy=publishedAt&apiKey=0d4d0ee992ac4ec7872a5bde00a5baf2`)
     response = await response.json();
 
 
@@ -45,7 +48,7 @@ export default function Home(props) {
 
     return (
       <div className='container-flud'>
-        <h5 className='background text-light text-center p-2 m-2'>{props.q} Articals</h5>
+        <h5 className='background text-light text-center p-2 m-2'>{q} Articals</h5>
         <InfiniteScroll
           dataLength={articles?.length} //This is important field to render the next data
           next={fetchData}
